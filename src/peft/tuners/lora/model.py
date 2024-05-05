@@ -197,6 +197,8 @@ class LoraModel(BaseTuner):
             "use_dora": lora_config.use_dora,
             "loaded_in_8bit": getattr(self.model, "is_loaded_in_8bit", False),
             "loaded_in_4bit": getattr(self.model, "is_loaded_in_4bit", False),
+#         "predefined_matrix_B": predefined_matrix_B,
+
         }
 
         quant_methods = ["gptq", "aqlm", "awq"]
@@ -220,6 +222,9 @@ class LoraModel(BaseTuner):
             )
         else:
             new_module = self._create_new_module(lora_config, adapter_name, target, **kwargs)
+#            fixed_B = predefined_matrix_B  # Define your_predefined_matrix_B accordingly
+#            new_module.lora_B.weight = torch.nn.Parameter(fixed_B, requires_grad=False)  # Set requires_grad to False
+
             if adapter_name not in self.active_adapters:
                 # adding an additional adapter: it is not automatically trainable
                 new_module.requires_grad_(False)
