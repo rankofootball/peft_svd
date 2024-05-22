@@ -268,6 +268,9 @@ class LoraConfig(PeftConfig):
             )
         },
     )
+    predefined_matrices_A: Dict[str, torch.Tensor] = field(
+        default_factory=dict, metadata={"help": "Predefined matrices for LoRA A layers"})
+
 
     def __post_init__(self):
         self.peft_type = PeftType.LORA
