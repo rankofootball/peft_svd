@@ -375,6 +375,7 @@ class Linear(nn.Module, LoraLayer):
         is_target_conv_1d_layer: bool = False,
         init_lora_weights: Union[bool, str] = True,
         use_rslora: bool = False,
+        predefined_matrices_A,
         use_dora: bool = False,
         **kwargs,
     ) -> None:
