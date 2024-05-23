@@ -201,7 +201,7 @@ class LoraModel(BaseTuner):
             "use_dora": lora_config.use_dora,
             "loaded_in_8bit": getattr(self.model, "is_loaded_in_8bit", False),
             "loaded_in_4bit": getattr(self.model, "is_loaded_in_4bit", False),
-#            "predefined_matrices_A": lora_config.predefined_matrices_A
+            "predefined_matrices_A": lora_config.predefined_matrices_A
 
         }
 
