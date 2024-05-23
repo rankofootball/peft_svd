@@ -91,7 +91,7 @@ class LoraLayer(BaseTunerLayer):
         self.out_features = out_features
 
     def update_layer(
-        self, adapter_name, r, lora_alpha, lora_dropout, init_lora_weights, use_rslora, predefined_matrices_A, use_dora: bool = False ):
+        self, adapter_name, r, lora_alpha, lora_dropout, init_lora_weights, use_rslora, use_dora: bool = False ):
         # This code works for linear layers, override for other layer types
         if r <= 0:
             raise ValueError(f"`r` should be a positive integer value but the value passed is {r}")
@@ -389,7 +389,6 @@ class Linear(nn.Module, LoraLayer):
     def __init__(
         self,
         base_layer,
-        predefined_matrices_A,
         adapter_name: str,
         r: int = 0,
         lora_alpha: int = 1,
@@ -413,7 +412,7 @@ class Linear(nn.Module, LoraLayer):
             lora_dropout=lora_dropout,
             init_lora_weights=init_lora_weights,
             use_rslora=use_rslora,
-            predefined_matrices_A = predefined_matrices_A,
+ #           predefined_matrices_A = predefined_matrices_A,
             use_dora=use_dora,
         )
         self.is_target_conv_1d_layer = is_target_conv_1d_layer
