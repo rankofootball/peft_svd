@@ -138,8 +138,8 @@ class LoraModel(BaseTuner):
 # seems the product is B times A
         super().__init__(model, config, adapter_name)
         print ("in init")
-        self.predefined_matrices_A = config.predefined_matrices_A or {}  # Store initial matrices
-        print (predefined_matrices_A)
+#        self.predefined_matrices_A = config.predefined_matrices_A or {}  # Store initial matrices
+#        print (predefined_matrices_A)
         
     def _check_new_adapter_config(self, config: LoraConfig) -> None:
         """
