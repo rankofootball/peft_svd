@@ -77,6 +77,7 @@ class PeftConfigMixin(PushToHubMixin):
 
         # save it
         with open(output_path, "w") as writer:
+            output_dict.pop("predefined_matrices_A")
             writer.write(json.dumps(output_dict, indent=2, sort_keys=True))
 
     @classmethod
