@@ -134,11 +134,12 @@ class LoraModel(BaseTuner):
 
     prefix: str = "lora_"
 
-    def __init__(self, model, config, adapter_name,initial_weights_A=None) -> None:
+    def __init__(self, model, config, adapter_name) -> None:
 # seems the product is B times A
         super().__init__(model, config, adapter_name)
-        self.initial_matrices = initial_weights_A or {}  # Store initial matrices
-
+        self.predefined_matrices_A = self.config.predefined_matrices_A or {}  # Store initial matrices
+        print (predefined_matrices_A)
+        
     def _check_new_adapter_config(self, config: LoraConfig) -> None:
         """
         A helper method to check the config when a new adapter is being added.
@@ -225,9 +226,8 @@ class LoraModel(BaseTuner):
         else:
             new_module = self._create_new_module(lora_config, adapter_name, target, **kwargs)
             # Check if an initial matrix is provided for this layer and apply it. Set update to False
-            if target_name in self.initial_matrices:
+            if target_name in self.predefined_matrices_A:
                 new_module.lora_A.weight.data = torch.nn.Parameter(self.predefined_matrices_A[target_name], requires_grad=False)
-
 
             if adapter_name not in self.active_adapters:
                 # adding an additional adapter: it is not automatically trainable
