@@ -222,8 +222,8 @@ class LoraModel(BaseTuner):
                 lora_dropout=lora_config.lora_dropout,
                 init_lora_weights=lora_config.init_lora_weights,
                 use_rslora=lora_config.use_rslora,
+                predefined_matrices_A = predefined_matrices_A,
                 use_dora=lora_config.use_dora,
-                predefined_matrices_A = predefined_matrices_A
             )
         else:
             new_module = self._create_new_module(lora_config, adapter_name, target, **kwargs)
