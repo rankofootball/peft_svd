@@ -90,7 +90,8 @@ class LoraLayer(BaseTunerLayer):
         self.out_features = out_features
 
     def update_layer(
-        self, adapter_name, r, lora_alpha, lora_dropout, init_lora_weights, use_rslora, use_dora: bool = False
+        self, adapter_name, r, lora_alpha, lora_dropout, init_lora_weights, use_rslora, use_dora: bool = False,
+        predefined_matrices_A 
     ):
         # This code works for linear layers, override for other layer types
         if r <= 0:
@@ -107,6 +108,7 @@ class LoraLayer(BaseTunerLayer):
         # Actual trainable parameters
         self.lora_A[adapter_name] = nn.Linear(self.in_features, r, bias=False)
         self.lora_B[adapter_name] = nn.Linear(r, self.out_features, bias=False)
+            
         if use_rslora:
             self.scaling[adapter_name] = lora_alpha / math.sqrt(r)
         else:
@@ -138,6 +140,11 @@ class LoraLayer(BaseTunerLayer):
 
     def reset_lora_parameters(self, adapter_name, init_lora_weights):
         if init_lora_weights is False:
+            nn.init.zeros_(self.lora_B[adapter_name].weight)
+            return
+
+       if init_lora_weights.lower() == 'a_svd':
+            nn.init.zeros_(self.lora_B[adapter_name].weight)
             return
 
         if adapter_name in self.lora_A.keys():
