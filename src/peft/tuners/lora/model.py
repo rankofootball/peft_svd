@@ -191,7 +191,7 @@ class LoraModel(BaseTuner):
         target_name_key = next(filter(lambda key: re.match(rf".*\.{key}$", current_key), pattern_keys), current_key)
         r = lora_config.rank_pattern.get(target_name_key, lora_config.r)
         alpha = lora_config.alpha_pattern.get(target_name_key, lora_config.lora_alpha)
-        predefined_matrices_A = lora_config.predefined_matrices_A.get(target_name_key, lora_config.predefined_matrices_A)
+#        predefined_matrices_A = lora_config.predefined_matrices_A.get(target_name_key, lora_config.predefined_matrices_A)
         kwargs = {
             "r": r,
             "lora_alpha": alpha,
@@ -202,7 +202,7 @@ class LoraModel(BaseTuner):
             "use_dora": lora_config.use_dora,
             "loaded_in_8bit": getattr(self.model, "is_loaded_in_8bit", False),
             "loaded_in_4bit": getattr(self.model, "is_loaded_in_4bit", False),
-            "predefined_matrices_A": lora_config.predefined_matrices_A
+  #          "predefined_matrices_A": lora_config.predefined_matrices_A
 
         }
 
@@ -223,7 +223,7 @@ class LoraModel(BaseTuner):
                 lora_dropout=lora_config.lora_dropout,
                 init_lora_weights=lora_config.init_lora_weights,
                 use_rslora=lora_config.use_rslora,
-                predefined_matrices_A = predefined_matrices_A,
+#                predefined_matrices_A = predefined_matrices_A,
                 use_dora=lora_config.use_dora,
             )
         else:
