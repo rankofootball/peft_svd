@@ -227,9 +227,9 @@ class LoraModel(BaseTuner):
         else:
             new_module = self._create_new_module(lora_config, adapter_name, target, **kwargs)
             # Check if an initial matrix is provided for this layer and apply it. Set update to False
-            if target_name in self.predefined_matrices_A:
-                print ("  TARGET: ", target_name)
-                new_module.lora_A.weight.data = torch.nn.Parameter(self.predefined_matrices_A[target_name], requires_grad=False)
+#            if target_name in self.predefined_matrices_A:
+#                print ("  TARGET: ", target_name)
+#                new_module.lora_A.weight.data = torch.nn.Parameter(self.predefined_matrices_A[target_name], requires_grad=False)
 
             if adapter_name not in self.active_adapters:
                 # adding an additional adapter: it is not automatically trainable
