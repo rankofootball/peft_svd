@@ -141,7 +141,7 @@ class LoraLayer(BaseTunerLayer):
             nn.init.zeros_(self.lora_B[adapter_name].weight)
             return
 
-       if init_lora_weights.lower() == 'a_svd':
+        if init_lora_weights.lower() == 'a_svd':
             nn.init.zeros_(self.lora_B[adapter_name].weight)
             return
 
