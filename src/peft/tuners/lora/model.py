@@ -190,7 +190,7 @@ class LoraModel(BaseTuner):
         target_name_key = next(filter(lambda key: re.match(rf".*\.{key}$", current_key), pattern_keys), current_key)
         r = lora_config.rank_pattern.get(target_name_key, lora_config.r)
         alpha = lora_config.alpha_pattern.get(target_name_key, lora_config.lora_alpha)
-        predefined_matrices_A = lora_config.get(target_name_key, lora_config.predefined_matrices_A)
+        predefined_matrices_A = lora_config.predefined_matrices_A.get(target_name_key, lora_config.predefined_matrices_A)
         kwargs = {
             "r": r,
             "lora_alpha": alpha,
