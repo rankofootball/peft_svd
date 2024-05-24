@@ -189,7 +189,7 @@ class LoraLayer(BaseTunerLayer):
             )
 
         lora_A = u_truncated @ torch.diag(s_truncated) @ v_truncated.T
-        lora_B = nn.init.zeros_(self.lora_embedding_B[adapter_name])
+        lora_B = nn.init.zeros_(self.lora_B[adapter_name])
 
 #        lora_A = torch.diag(torch.sqrt(Sr)) @ Uhr
 #        lora_B = Vr @ torch.diag(torch.sqrt(Sr))
