@@ -232,7 +232,7 @@ class LoraModel(BaseTuner):
 #            if target_name in predefined_matrices_A:
 #                print ("  TARGET: ", target_name)
 #                new_module.lora_A.weight.data = torch.nn.Parameter(self.predefined_matrices_A[target_name], requires_grad=False)
-            print (target)
+            print (target_name,adapter_name)
             if adapter_name not in self.active_adapters:
                 # adding an additional adapter: it is not automatically trainable
                 new_module.requires_grad_(False)
