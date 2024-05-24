@@ -276,6 +276,7 @@ class LoraModel(BaseTuner):
 
     def _mark_only_adapters_as_trainable(self, model: nn.Module) -> None:
         for n, p in model.named_parameters():
+            print (n)
             if self.prefix not in n:
                 p.requires_grad = False
 
