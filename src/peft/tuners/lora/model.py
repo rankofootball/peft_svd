@@ -276,25 +276,26 @@ class LoraModel(BaseTuner):
 
     def _mark_only_adapters_as_trainable(self, model: nn.Module) -> None:
         for n, p in model.named_parameters():
-            print (n)
             if self.prefix not in n:
                 p.requires_grad = False
-
-        for active_adapter in self.active_adapters:
-            bias = self.peft_config[active_adapter].bias
-            if bias == "none":
-                continue
-
+        for n, p in model.named_parameters():
+            if "lora_B" in n:
+                p.requires_grad = True
+#        for active_adapter in self.active_adapters:
+#            bias = self.peft_config[active_adapter].bias
+#            if bias == "none":
+#                continue
+#
             if bias == "all":
                 for n, p in model.named_parameters():
                     if "bias" in n:
                         p.requires_grad = True
-            elif bias == "lora_only":
-                for m in model.modules():
-                    if isinstance(m, LoraLayer) and hasattr(m, "bias") and m.bias is not None:
-                        m.bias.requires_grad = True
-            else:
-                raise NotImplementedError(f"Requested bias: {bias}, is not implemented.")
+#            elif bias == "lora_only":
+#                for m in model.modules():
+#                    if isinstance(m, LoraLayer) and hasattr(m, "bias") and m.bias is not None:
+#                        m.bias.requires_grad = True
+#            else:
+#                raise NotImplementedError(f"Requested bias: {bias}, is not implemented.")
 
     @staticmethod
     def _create_new_module(lora_config, adapter_name, target, **kwargs):
