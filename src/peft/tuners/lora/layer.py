@@ -196,7 +196,7 @@ class LoraLayer(BaseTunerLayer):
         self.lora_A[adapter_name].weight.data = lora_A
 #        self.lora_B[adapter_name].weight.data = lora_B
         nn.init.zeros_(self.lora_B[adapter_name].weight)
-        weight = weight.data - self.scaling[adapter_name] * elf.lora_B[adapter_name].weight @ lora_A
+        weight = weight.data - self.scaling[adapter_name] * self.lora_B[adapter_name].weight @ lora_A
         weight = weight.to(dtype)
         self.get_base_layer().weight.data = weight
 
