@@ -177,7 +177,7 @@ class LoraLayer(BaseTunerLayer):
             u_truncated = u[:, -self.r[adapter_name]:]
             s_truncated = s[-self.r[adapter_name]:]
             v_truncated = v[:, -self.r[adapter_name]:]
-
+            print (u.shape,v.shape)
         elif len(init_lora_weights.split("_niter_")) == 2:
             Vr, Sr, Ur = svd_lowrank(
                 weight.data, self.r[adapter_name], niter=int(init_lora_weights.split("_niter_")[-1])
