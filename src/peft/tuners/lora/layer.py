@@ -164,6 +164,7 @@ class LoraLayer(BaseTunerLayer):
 #                "Subsequently, re-quantize the residual model to help minimize quantization errors."
 #            )
         weight = weight.to(torch.float32)
+        print ("W.shape: ", weight.shape)
 
         if init_lora_weights == "pissa":
             # USV^T = W <-> VSU^T = W^T, where W^T = weight.data in R^{out_channel, in_channel},
