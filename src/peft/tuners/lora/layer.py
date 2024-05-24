@@ -188,7 +188,8 @@ class LoraLayer(BaseTunerLayer):
                 f"init_lora_weights should be 'pissa' or 'pissa_niter_[number of iters]', got {init_lora_weights} instead."
             )
 
-        lora_A = u_truncated @ torch.diag(s_truncated) @ v_truncated.T
+#        lora_A = u_truncated @ torch.diag(s_truncated) @ v_truncated.T
+        lora_A = v_truncated.T
 #        nn.init.zeros_(lora_B)
 
 #        lora_A = torch.diag(torch.sqrt(Sr)) @ Uhr
@@ -196,6 +197,7 @@ class LoraLayer(BaseTunerLayer):
         self.lora_A[adapter_name].weight.data = lora_A
 #        self.lora_B[adapter_name].weight.data = lora_B
         nn.init.zeros_(self.lora_B[adapter_name].weight)
+        print (lora_A[adapter_name].weight.shape(),lora_B[adapter_name].weight.shape())
 #        weight = weight.data - self.scaling[adapter_name] * self.lora_B[adapter_name].weight @ lora_A
 #        weight = weight.to(dtype)
 #        self.get_base_layer().weight.data = weight
