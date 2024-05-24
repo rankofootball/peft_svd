@@ -189,12 +189,13 @@ class LoraLayer(BaseTunerLayer):
             )
 
         lora_A = u_truncated @ torch.diag(s_truncated) @ v_truncated.T
-        lora_B = nn.init.zeros_(self.lora_B[adapter_name])
+#        lora_B = nn.init.zeros_(self.lora_B[adapter_name])
 
 #        lora_A = torch.diag(torch.sqrt(Sr)) @ Uhr
 #        lora_B = Vr @ torch.diag(torch.sqrt(Sr))
         self.lora_A[adapter_name].weight.data = lora_A
-        self.lora_B[adapter_name].weight.data = lora_B
+#        self.lora_B[adapter_name].weight.data = lora_B
+        nn.init.zeros_(self.lora_B[adapter_name])
         weight = weight.data - self.scaling[adapter_name] * lora_B @ lora_A
         weight = weight.to(dtype)
         self.get_base_layer().weight.data = weight
