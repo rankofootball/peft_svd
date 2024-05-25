@@ -174,9 +174,9 @@ class LoraLayer(BaseTunerLayer):
             #Sr /= self.scaling[adapter_name]      
             #Uhr = Uh[: self.r[adapter_name]]      #     r, input
             u, s, v = torch.linalg.svd(weight.data, full_matrices=False) 
-            u_truncated = u[:, -self.r[adapter_name]:]
-            s_truncated = s[-self.r[adapter_name]:]
-            v_truncated = v[-self.r[adapter_name]:,:]
+#            u_truncated = u[:, -self.r[adapter_name]:]   # not needed atm
+#            s_truncated = s[-self.r[adapter_name]:]    
+            v_truncated = v[:self.r[adapter_name],:]
             print (u.shape,v.shape)
         elif len(init_lora_weights.split("_niter_")) == 2:
             Vr, Sr, Ur = svd_lowrank(
