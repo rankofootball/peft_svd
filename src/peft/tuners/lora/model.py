@@ -138,7 +138,7 @@ class LoraModel(BaseTuner):
     def __init__(self, model, config, adapter_name) -> None:
 # seems the product is B times A
         super().__init__(model, config, adapter_name)
-        print ("in init")
+#        print ("in init")
 #        self.predefined_matrices_A = config.predefined_matrices_A or {}  # Store initial matrices
 #        print (predefined_matrices_A)
         
@@ -231,7 +231,7 @@ class LoraModel(BaseTuner):
 #            if target_name in predefined_matrices_A:
 #                print ("  TARGET: ", target_name)
 #                new_module.lora_A.weight.data = torch.nn.Parameter(self.predefined_matrices_A[target_name], requires_grad=False)
-            print (target_name,adapter_name)
+#            print (target_name,adapter_name)
             if adapter_name not in self.active_adapters:
                 # adding an additional adapter: it is not automatically trainable
                 new_module.requires_grad_(False)
