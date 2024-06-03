@@ -177,7 +177,7 @@ class LoraLayer(BaseTunerLayer):
             u_truncated = u[:, -self.r[adapter_name]:]   # not needed atm
 #            s_truncated = s[-self.r[adapter_name]:]    
 #            v_truncated = v[:self.r[adapter_name],:]    # uncomment for variant 1
-            print (u.shape,v.shape)
+            print ("U,Vh: ",u.shape,v.shape)
         elif len(init_lora_weights.split("_niter_")) == 2:
             Vr, Sr, Ur = svd_lowrank(
                 weight.data, self.r[adapter_name], niter=int(init_lora_weights.split("_niter_")[-1])
@@ -196,6 +196,7 @@ class LoraLayer(BaseTunerLayer):
         lora_B = u_truncated
         self.lora_B[adapter_name].weight.data = lora_B
         nn.init.zeros_(self.lora_A[adapter_name].weight)
+        print ("Lora B, A: ",lora_B.shape,lora_A.shape)
 
 #        lora_A = u_truncated @ torch.diag(s_truncated) @ v_truncated.T    
 #        lora_A = torch.diag(torch.sqrt(Sr)) @ Uhr        # dim r,input
