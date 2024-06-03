@@ -174,9 +174,9 @@ class LoraLayer(BaseTunerLayer):
             #Sr /= self.scaling[adapter_name]      
             #Uhr = Uh[: self.r[adapter_name]]      #     r, input
             u, s, v = torch.linalg.svd(weight.data, full_matrices=False) 
-#            u_truncated = u[:, -self.r[adapter_name]:]   # not needed atm
+            u_truncated = u[:, -self.r[adapter_name]:]   # not needed atm
 #            s_truncated = s[-self.r[adapter_name]:]    
-            v_truncated = v[:self.r[adapter_name],:]
+#            v_truncated = v[:self.r[adapter_name],:]    # uncomment for variant 1
             print (u.shape,v.shape)
         elif len(init_lora_weights.split("_niter_")) == 2:
             Vr, Sr, Ur = svd_lowrank(
@@ -188,14 +188,18 @@ class LoraLayer(BaseTunerLayer):
             raise ValueError(
                 f"init_lora_weights should be 'pissa' or 'pissa_niter_[number of iters]', got {init_lora_weights} instead."
             )
+        # variant 1 with constrained input space
+#        lora_A = v_truncated
+#        self.lora_A[adapter_name].weight.data = lora_A
+#        nn.init.zeros_(self.lora_B[adapter_name].weight)
+        # variant 2 with constrained output space
+        lora_B = u_truncated
+        self.lora_B[adapter_name].weight.data = lora_B
+        nn.init.zeros_(self.lora_A[adapter_name].weight)
 
 #        lora_A = u_truncated @ torch.diag(s_truncated) @ v_truncated.T    
-        lora_A = v_truncated
-
 #        lora_A = torch.diag(torch.sqrt(Sr)) @ Uhr        # dim r,input
 #        lora_B = Vr @ torch.diag(torch.sqrt(Sr))         #     output, r
-        self.lora_A[adapter_name].weight.data = lora_A
-        nn.init.zeros_(self.lora_B[adapter_name].weight)
 #        print (self.lora_A[adapter_name].weight.shape,self.lora_B[adapter_name].weight.shape)
 #        weight = weight.data - self.scaling[adapter_name] * self.lora_B[adapter_name].weight @ lora_A
 #        weight = weight.to(dtype)
