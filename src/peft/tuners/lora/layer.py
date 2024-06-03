@@ -194,6 +194,7 @@ class LoraLayer(BaseTunerLayer):
 #        nn.init.zeros_(self.lora_B[adapter_name].weight)
         # variant 2 with constrained output space
         lora_B = u_truncated
+        lora_B = lora_B.contiguous()
         self.lora_B[adapter_name].weight.data = lora_B
         nn.init.zeros_(self.lora_A[adapter_name].weight)
         print ("Lora B, A: ",lora_B.shape,self.lora_A[adapter_name].weight.shape)
