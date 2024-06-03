@@ -196,8 +196,8 @@ class LoraLayer(BaseTunerLayer):
         lora_B = u_truncated
         lora_B = lora_B.contiguous()
         self.lora_B[adapter_name].weight.data = lora_B
-        nn.init.normal_(self.lora_A[adapter_name].weight, std=1 / self.r[adapter_name])
-#        nn.init.zeros_(self.lora_A[adapter_name].weight)
+#        nn.init.normal_(self.lora_A[adapter_name].weight, std=1 / self.r[adapter_name])
+        nn.init.zeros_(self.lora_A[adapter_name].weight)
         print ("Lora B, A: ",lora_B.shape,self.lora_A[adapter_name].weight.shape)
 
 #        lora_A = u_truncated @ torch.diag(s_truncated) @ v_truncated.T    
