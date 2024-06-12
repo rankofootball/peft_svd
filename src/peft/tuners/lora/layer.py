@@ -174,7 +174,7 @@ class LoraLayer(BaseTunerLayer):
             #Sr /= self.scaling[adapter_name]      
             #Uhr = Uh[: self.r[adapter_name]]      #     r, input
             u, s, v = torch.linalg.svd(weight.data, full_matrices=False) 
-            u_truncated = u[:, :self.r[adapter_name]]   # not needed atm
+            u_truncated = u[:, -self.r[adapter_name]:]   # uncomment for variant 2 (constr. output space)
 #            s_truncated = s[-self.r[adapter_name]:]    
 #            v_truncated = v[:self.r[adapter_name],:]    # uncomment for variant 1
             print ("U,Vh: ",u.shape,v.shape)
