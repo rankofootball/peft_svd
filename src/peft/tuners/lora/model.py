@@ -277,14 +277,15 @@ class LoraModel(BaseTuner):
         for n, p in model.named_parameters():
             if self.prefix not in n:
                 p.requires_grad = False
-        print ("in mark1")
         for n, p in model.named_parameters():
             if "lora_A" in n:
                 p.requires_grad = True
-                print ("True:",n)
             if "lora_B" in n:
-                p.requires_grad = True
-                print ("False", n)
+                if init_lora_weights.startswith("pissa"):            
+                    p.requires_grad = False
+                elif:
+                    p.requires_grad = True
+                    
 #        for active_adapter in self.active_adapters:
 #            bias = self.peft_config[active_adapter].bias
 #            if bias == "none":
