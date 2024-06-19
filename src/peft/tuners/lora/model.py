@@ -274,19 +274,20 @@ class LoraModel(BaseTuner):
                 module.to(weight.device)
 
     def _mark_only_adapters_as_trainable(self, model: nn.Module) -> None:
-        init_lora_weights = self.peft_config[active_adapter].init_lora_weights
-        for n, p in model.named_parameters():
-            if self.prefix not in n:
-                p.requires_grad = False
-        for n, p in model.named_parameters():
-            if "lora_A" in n:
-                p.requires_grad = True
-            if "lora_B" in n:
-                if init_lora_weights.startswith("pissa"):            
+        for active_adapter in self.active_adapters:
+            init_lora_weights = self.peft_config[active_adapter].init_lora_weights
+            for n, p in model.named_parameters():
+                if self.prefix not in n:
                     p.requires_grad = False
-                else:
+            for n, p in model.named_parameters():
+                if "lora_A" in n:
                     p.requires_grad = True
-                    
+                if "lora_B" in n:
+                    if init_lora_weights.startswith("pissa"):            
+                        p.requires_grad = False
+                    else:
+                        p.requires_grad = True
+                        
 #        for active_adapter in self.active_adapters:
 #            bias = self.peft_config[active_adapter].bias
 #            if bias == "none":
