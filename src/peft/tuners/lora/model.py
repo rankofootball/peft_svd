@@ -283,7 +283,7 @@ class LoraModel(BaseTuner):
                 p.requires_grad = True
                 print ("True:",n)
             if "lora_B" in n:
-                p.requires_grad = False
+                p.requires_grad = True
                 print ("False", n)
 #        for active_adapter in self.active_adapters:
 #            bias = self.peft_config[active_adapter].bias
