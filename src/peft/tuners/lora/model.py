@@ -282,7 +282,7 @@ class LoraModel(BaseTuner):
             for n, p in model.named_parameters():
                 if "lora_A" in n:
                     p.requires_grad = True
-                if "lora_B" in n:
+                if "lora_B" in n and isinstance(init_lora_weights, str):
                     if init_lora_weights.startswith("pissa"):            
                         p.requires_grad = False
                     else:
