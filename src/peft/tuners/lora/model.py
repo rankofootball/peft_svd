@@ -280,7 +280,7 @@ class LoraModel(BaseTuner):
                 if self.prefix not in n:
                     p.requires_grad = False
             for n, p in model.named_parameters():
-                print (n)
+#                print (n)
                 if "lora_A" in n:
                     p.requires_grad = True
                 if "lora_B" in n and isinstance(init_lora_weights, str):
@@ -288,7 +288,7 @@ class LoraModel(BaseTuner):
                         p.requires_grad = False
                     else:
                         p.requires_grad = True
-                print (p.requires_grad)                        
+#                print (p.requires_grad)                        
 #        for active_adapter in self.active_adapters:
 #            bias = self.peft_config[active_adapter].bias
 #            if bias == "none":
