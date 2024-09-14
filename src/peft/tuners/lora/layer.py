@@ -164,7 +164,7 @@ class LoraLayer(BaseTunerLayer):
 #                "Subsequently, re-quantize the residual model to help minimize quantization errors."
 #            )
         weight = weight.to(torch.float32)
-        print ("W.shape: ", weight.shape)
+#        print ("W.shape: ", weight.shape)
 
         if init_lora_weights == "pissa":
             # USV^T = W <-> VSU^T = W^T, where W^T = weight.data in R^{out_channel, in_channel},
@@ -177,7 +177,7 @@ class LoraLayer(BaseTunerLayer):
             u_truncated = u[:, -self.r[adapter_name]:]   # uncomment for variant 2 (constr. output space)
 #            s_truncated = s[-self.r[adapter_name]:]    
 #            v_truncated = v[:self.r[adapter_name],:]    # uncomment for variant 1
-            print ("U,Vh: ",u.shape,v.shape)
+#            print ("U,Vh: ",u.shape,v.shape)
         elif len(init_lora_weights.split("_niter_")) == 2:
             Vr, Sr, Ur = svd_lowrank(
                 weight.data, self.r[adapter_name], niter=int(init_lora_weights.split("_niter_")[-1])
@@ -198,7 +198,7 @@ class LoraLayer(BaseTunerLayer):
         self.lora_B[adapter_name].weight.data = lora_B
 #        nn.init.normal_(self.lora_A[adapter_name].weight, std=1 / self.r[adapter_name])
         nn.init.zeros_(self.lora_A[adapter_name].weight)
-        print ("Lora B, A: ",lora_B.shape,self.lora_A[adapter_name].weight.shape)
+#        print ("Lora B, A: ",lora_B.shape,self.lora_A[adapter_name].weight.shape)
 
 #        lora_A = u_truncated @ torch.diag(s_truncated) @ v_truncated.T    
 #        lora_A = torch.diag(torch.sqrt(Sr)) @ Uhr        # dim r,input
