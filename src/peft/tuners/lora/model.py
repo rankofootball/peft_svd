@@ -138,7 +138,7 @@ class LoraModel(BaseTuner):
     def __init__(self, model, config, adapter_name) -> None:
 # seems the product is B times A
         super().__init__(model, config, adapter_name)
-#        print ("in init")
+        print ("Initializing MiCA")
 #        self.predefined_matrices_A = config.predefined_matrices_A or {}  # Store initial matrices
 #        print (predefined_matrices_A)
         
